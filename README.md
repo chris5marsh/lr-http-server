@@ -42,10 +42,11 @@ Default usage
 
 All options
 
-    > lr-http-server -p 80 -d src/ -l 30000 -w **/*.css,*.html
+    > lr-http-server -p 80 -d src/ -l 30000 -w **/*.css,*.html -x "/media=https://example.com/media"
 
     HTTP server listening on port 80
     Serving <path>/src
+    Proxying /media to https://example.com/media
     Livereload listening on port 30000
     Watching files:
       <path>/src/**/*.css

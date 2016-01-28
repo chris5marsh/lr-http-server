@@ -74,6 +74,8 @@ module.exports = function(port, dir, livereloadPort, watchFiles, openBrowser, pr
 
   console.log("HTTP server listening on port " + port + "\nServing " + absoluteDir);
 
+  if (proxy) console.log("Proxying "+proxy[0]+" to "+proxy[1]);
+
   if(openBrowser) { open("http://127.0.0.1:" + port); }
 
 };
