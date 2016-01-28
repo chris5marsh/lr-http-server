@@ -2,14 +2,22 @@ var connect = require('connect'),
     path = require('path'),
     gaze = require('gaze'),
     open = require('open'),
-    tinylr = require('tiny-lr');
+    tinylr = require('tiny-lr'),
+    proxymw = require('proxy-middleware');
 
 
 
-module.exports = function(port, dir, livereloadPort, watchFiles, openBrowser) {
+module.exports = function(port, dir, livereloadPort, watchFiles, openBrowser, proxy) {
 
   port = port || 8080;
   dir = dir || '.';
+
+  if(proxy === 'false' || proxy === false)
+    proxy = false;
+  else
+    proxy = proxy.split('=');
+
+  console.log(proxy);
 
   if(livereloadPort === 'false' || livereloadPort === false)
     livereloadPort = false;
@@ -28,7 +36,7 @@ module.exports = function(port, dir, livereloadPort, watchFiles, openBrowser) {
 
   var server = connect();
 
-                
+
   if(livereloadPort) {
     server.use(require('connect-livereload')({ port: livereloadPort }));
 
@@ -59,7 +67,8 @@ module.exports = function(port, dir, livereloadPort, watchFiles, openBrowser) {
     });
   }
 
-  server.use(connect.static(absoluteDir))
+  server.use(proxy[0], proxymw(proxy[1]))
+        .use(connect.static(absoluteDir))
         .use(connect.directory(absoluteDir))
         .listen(port);
 
