@@ -9,7 +9,7 @@ An HTTP server with livereload included. If a file inside the folder being serve
 
 ## Usage
 
-    lr-http-server [-p <port>] [-d <dir>] [-l livereloadport] [-w < watchPaths || false >] [-b]
+    lr-http-server [-p <port>] [-d <dir>] [-l livereloadport] [-w < watchPaths || false >] [-b] [-x <proxyPath=proxyURL>]
 
 **port** (default *8080*): Port to listen on
 
@@ -20,6 +20,10 @@ An HTTP server with livereload included. If a file inside the folder being serve
 **watchPaths**: Comma-separated list of glob patterns for the files to watch. *e.g.* `**/*.js,**/*.css,**/*.html,**/*.xml`
 
 **b**: disable browser open
+
+**proxyPath**: (default false): the path for the proxy to work on e.g. "/media"
+
+**proxyUrl**: (default false): the URL for the proxy to redirect to e.g "https://example.com/media". Should be combined with the *proxyPath* e.g "/media=https://example.com/media"
 
 ## Examples
 
@@ -38,7 +42,7 @@ Default usage
 
 All options
 
-    > lr-http-server -p 80 -d src/ -l 30000 -w **/*.css,*.html 
+    > lr-http-server -p 80 -d src/ -l 30000 -w **/*.css,*.html
 
     HTTP server listening on port 80
     Serving <path>/src
