@@ -12,12 +12,10 @@ module.exports = function(port, dir, livereloadPort, watchFiles, openBrowser, pr
   port = port || 8080;
   dir = dir || '.';
 
-  if(proxy === 'false' || proxy === false)
+  if(proxy === 'false' || proxy === false || !proxy)
     proxy = false;
   else
     proxy = proxy.split('=');
-
-  console.log(proxy);
 
   if(livereloadPort === 'false' || livereloadPort === false)
     livereloadPort = false;
@@ -67,8 +65,8 @@ module.exports = function(port, dir, livereloadPort, watchFiles, openBrowser, pr
     });
   }
 
-  server.use(proxy[0], proxymw(proxy[1]))
-        .use(connect.static(absoluteDir))
+  if (proxy) server.use(proxy[0], proxymw(proxy[1]));
+  server.use(connect.static(absoluteDir))
         .use(connect.directory(absoluteDir))
         .listen(port);
 
